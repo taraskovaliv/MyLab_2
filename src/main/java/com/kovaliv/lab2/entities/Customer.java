@@ -7,21 +7,22 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
+
 @Entity
-@Setter
 @Getter
-@EqualsAndHashCode(exclude = "rents")
-@Table(name = "cars")
-public class Car {
+@Setter
+@EqualsAndHashCode
+@Table(name = "customers")
+public class Customer {
     @Id
     private Long id;
 
-    @Column(length = 40, nullable = false)
+    @Column(length = 30, nullable = false)
     private String name;
 
-    @Column(length = 8, nullable = false)
-    private String code;
+    @Column(length = 30, nullable = false)
+    private String surname;
 
-    @OneToMany(mappedBy = "car")
+    @OneToMany(mappedBy = "customer")
     private List<Rent> rents;
 }
