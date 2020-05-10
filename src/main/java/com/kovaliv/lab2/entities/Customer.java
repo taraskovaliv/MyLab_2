@@ -9,16 +9,17 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Entity
-@Setter
 @Getter
+@Setter
 @EqualsAndHashCode
-@Table(name = "cars")
-public class Car {
+@Table(name = "customers")
+public class Customer {
     @Id
     private Long id;
-    @Column(length = 40, nullable = false)
+    @Column(length = 30, nullable = false)
     private String name;
-    @Column(length = 8, nullable = false)
-    private String code;
+    @Column(length = 30, nullable = false)
+    private String surname;
 }
