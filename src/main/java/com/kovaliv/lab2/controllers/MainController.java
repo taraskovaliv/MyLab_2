@@ -1,4 +1,4 @@
-package lab2.controllers;
+package com.kovaliv.lab2.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
