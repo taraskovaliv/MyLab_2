@@ -4,10 +4,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -18,8 +16,13 @@ import javax.persistence.Table;
 public class Customer {
     @Id
     private Long id;
+
     @Column(length = 30, nullable = false)
     private String name;
+
     @Column(length = 30, nullable = false)
     private String surname;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Rent> rents;
 }
