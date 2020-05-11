@@ -1,5 +1,6 @@
 package com.kovaliv.lab2.entities;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
+@Builder
 @EqualsAndHashCode(exclude = "rents")
 @Table(name = "cars")
 public class Car {
