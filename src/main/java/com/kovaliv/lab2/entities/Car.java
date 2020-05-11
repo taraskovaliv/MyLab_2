@@ -1,9 +1,6 @@
 package com.kovaliv.lab2.entities;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,8 +9,9 @@ import java.util.List;
 @Setter
 @Getter
 @Builder
-@EqualsAndHashCode(exclude = "rents")
 @Table(name = "cars")
+@ToString(exclude = "rents")
+@EqualsAndHashCode(exclude = "rents")
 public class Car {
     @Id
     private Long id;
