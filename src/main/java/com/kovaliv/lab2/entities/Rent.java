@@ -1,16 +1,14 @@
 package com.kovaliv.lab2.entities;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
-import java.time.ZonedDateTime;
+import java.sql.Date;
 
 @Entity
 @Setter
 @Getter
+@Builder
 @EqualsAndHashCode
 @ToString(exclude = "customer")
 @Table(name = "rents")
@@ -19,10 +17,10 @@ public class Rent {
     private Long id;
 
     @Column(nullable = false)
-    private ZonedDateTime startOfRent;
+    private Date startOfRent;
 
     @Column(nullable = false)
-    private ZonedDateTime endOfRent;
+    private Date endOfRent;
 
     @ManyToOne
     private Car car;
