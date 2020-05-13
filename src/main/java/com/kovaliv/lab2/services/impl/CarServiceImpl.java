@@ -1,5 +1,6 @@
 package com.kovaliv.lab2.services.impl;
 
+import com.kovaliv.lab2.ExceptionMessage;
 import com.kovaliv.lab2.dtos.car.AddCarDto;
 import com.kovaliv.lab2.dtos.car.CarDto;
 import com.kovaliv.lab2.entities.Car;
@@ -10,7 +11,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,23 +27,28 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public Car getById(Long id) {
+        return carRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException(ExceptionMessage.CAR_NOT_FOUND));
+    }
+
+    @Override
     public CarDto save(AddCarDto addCarDto) {
         Car savedCar = carRepo.save(modelMapper.map(addCarDto, Car.class));
         return modelMapper.map(savedCar, CarDto.class);
     }
 
     @Override
-    public CarDto update(CarDto carDto) {
-        return null;
+    public CarDto update(AddCarDto addCarDto, Long id) {
+        Car car = getById(id);
+        car.setCode(addCarDto.getCode());
+        car.setName(addCarDto.getName());
+        return modelMapper.map(carRepo.save(car), CarDto.class);
     }
 
     @Override
     public void delete(Long id) {
-        Optional<Car> car = carRepo.findById(id);
-        if (car.isPresent()) {
-            carRepo.delete(car.get());
-        } else {
-            throw new RuntimeException("Car not found");
-        }
+        Car car = getById(id);
+        carRepo.delete(car);
     }
 }

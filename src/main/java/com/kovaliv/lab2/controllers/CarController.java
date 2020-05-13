@@ -26,9 +26,9 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.CREATED).body(carService.save(addCarDto));
     }
 
-    @PutMapping
-    public ResponseEntity<CarDto> update(@RequestBody CarDto carDto) {
-        return ResponseEntity.ok(carService.update(carDto));
+    @PutMapping("/{id}")
+    public ResponseEntity<CarDto> update(@RequestBody AddCarDto addCarDto, @PathVariable Long id) {
+        return ResponseEntity.ok(carService.update(addCarDto, id));
     }
 
     @DeleteMapping("/{id}")
