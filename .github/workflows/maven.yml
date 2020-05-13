@@ -1,4 +1,4 @@
-name: Java CI with Maven to Lab_2
+name: Java CI to Lab_2
 
 on:
   push:
