@@ -41,10 +41,10 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public RentDto update(AddRentDto addRentDto, Long id) {
-        rentRepo.findById(id)
+        Rent rent = rentRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException(ExceptionMessage.RENT_NOT_FOUND));
-        Rent rent = modelMapper.map(addRentDto, Rent.class);
-        rent.setId(id);
+        rent.setEndOfRent(addRentDto.getEnd());
+        rent.setStartOfRent(addRentDto.getStart());
         rent.setCar(carService.getById(addRentDto.getCarId()));
         rent.setCustomer(customerService.getById(addRentDto.getCustomerId()));
         return modelMapper.map(rentRepo.save(rent), RentDto.class);
@@ -56,7 +56,7 @@ public class RentServiceImpl implements RentService {
         if (rent.isPresent()) {
             rentRepo.delete(rent.get());
         } else {
-            throw new RuntimeException("Rent not found");
+            throw new RuntimeException(ExceptionMessage.RENT_NOT_FOUND);
         }
     }
 }
