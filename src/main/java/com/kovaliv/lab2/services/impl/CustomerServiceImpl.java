@@ -11,7 +11,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,17 +39,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDto update(CustomerDto customerDto) {
-        return null;
+    public CustomerDto update(AddCustomerDto addCustomerDto, Long id) {
+        Customer customer = getById(id);
+        customer.setName(addCustomerDto.getName());
+        customer.setSurname(addCustomerDto.getSurname());
+        return modelMapper.map(customerRepo.save(customer), CustomerDto.class);
     }
 
     @Override
     public void delete(Long id) {
-        Optional<Customer> customer = customerRepo.findById(id);
-        if (customer.isPresent()) {
-            customerRepo.delete(customer.get());
-        } else {
-            throw new RuntimeException("Customer not found");
-        }
+        Customer customer = getById(id);
+        customerRepo.delete(customer);
     }
 }
