@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/rent")
 public class RentController {
     private final RentService rentService;
 
