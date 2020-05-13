@@ -26,9 +26,9 @@ public class RentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(rentService.save(addRentDto));
     }
 
-    @PutMapping
-    public ResponseEntity<RentDto> update(@RequestBody RentDto rentDto) {
-        return ResponseEntity.ok(rentService.update(rentDto));
+    @PutMapping("/{id}")
+    public ResponseEntity<RentDto> update(@RequestBody AddRentDto addRentDto, @PathVariable Long id) {
+        return ResponseEntity.ok(rentService.update(addRentDto, id));
     }
 
     @DeleteMapping("/{id}")

@@ -10,7 +10,7 @@ public interface RentService {
 
     RentDto save(AddRentDto addRentDto);
 
-    RentDto update(RentDto rentDto);
+    RentDto update(AddRentDto addRentDto, Long id);
 
     void delete(Long id);
 }

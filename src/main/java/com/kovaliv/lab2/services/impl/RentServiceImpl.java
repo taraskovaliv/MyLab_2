@@ -1,11 +1,12 @@
 package com.kovaliv.lab2.services.impl;
 
+import com.kovaliv.lab2.ExceptionMessage;
 import com.kovaliv.lab2.dtos.rent.AddRentDto;
 import com.kovaliv.lab2.dtos.rent.RentDto;
 import com.kovaliv.lab2.entities.Rent;
-import com.kovaliv.lab2.repositories.CarRepo;
-import com.kovaliv.lab2.repositories.CustomerRepo;
 import com.kovaliv.lab2.repositories.RentRepo;
+import com.kovaliv.lab2.services.CarService;
+import com.kovaliv.lab2.services.CustomerService;
 import com.kovaliv.lab2.services.RentService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -18,10 +19,10 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class RentServiceImpl implements RentService {
-    private final CarRepo carRepo;
     private final RentRepo rentRepo;
+    private final CarService carService;
     private final ModelMapper modelMapper;
-    private final CustomerRepo customerRepo;
+    private final CustomerService customerService;
 
     @Override
     public List<RentDto> getAll() {
@@ -32,12 +33,21 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public RentDto save(AddRentDto addRentDto) {
-        return null;
+        Rent rent = modelMapper.map(addRentDto, Rent.class);
+        rent.setCar(carService.getById(addRentDto.getCarId()));
+        rent.setCustomer(customerService.getById(addRentDto.getCustomerId()));
+        return modelMapper.map(rentRepo.save(rent), RentDto.class);
     }
 
     @Override
-    public RentDto update(RentDto rentDto) {
-        return null;
+    public RentDto update(AddRentDto addRentDto, Long id) {
+        rentRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException(ExceptionMessage.RENT_NOT_FOUND));
+        Rent rent = modelMapper.map(addRentDto, Rent.class);
+        rent.setId(id);
+        rent.setCar(carService.getById(addRentDto.getCarId()));
+        rent.setCustomer(customerService.getById(addRentDto.getCustomerId()));
+        return modelMapper.map(rentRepo.save(rent), RentDto.class);
     }
 
     @Override

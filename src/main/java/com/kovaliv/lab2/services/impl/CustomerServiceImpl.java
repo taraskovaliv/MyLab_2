@@ -1,5 +1,6 @@
 package com.kovaliv.lab2.services.impl;
 
+import com.kovaliv.lab2.ExceptionMessage;
 import com.kovaliv.lab2.dtos.customer.AddCustomerDto;
 import com.kovaliv.lab2.dtos.customer.CustomerDto;
 import com.kovaliv.lab2.entities.Customer;
@@ -24,6 +25,12 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepo.findAll().stream()
                 .map(customer -> modelMapper.map(customer, CustomerDto.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Customer getById(Long id) {
+        return customerRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException(ExceptionMessage.CUSTOMER_NOT_FOUND));
     }
 
     @Override
