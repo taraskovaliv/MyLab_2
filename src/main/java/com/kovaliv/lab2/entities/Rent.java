@@ -10,10 +10,13 @@ import java.sql.Date;
 @Getter
 @Builder
 @EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString(exclude = "customer")
 @Table(name = "rents")
 public class Rent {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
